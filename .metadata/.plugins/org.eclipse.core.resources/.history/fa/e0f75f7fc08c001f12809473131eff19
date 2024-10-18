@@ -1,0 +1,5 @@
+package com.rishirajan.Taskmanager.repository;
+
+public interface CommentRepository {
+
+}

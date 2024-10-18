@@ -1,0 +1,54 @@
+package com.rishirajan.Taskmanager.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.rishirajan.Taskmanager.Entity.Task;
+import com.rishirajan.Taskmanager.service.taskService;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
+@RestController
+public class TaskController {
+	
+	@Autowired
+	private taskService service;
+	
+	@PostMapping("/tasks")
+	public Task addTask(@RequestBody Task task) {
+		
+		
+		return service.saveTask(task);
+	}
+	
+	@PutMapping("/updateTask")
+	public Task updateTask(@RequestBody Task task) {
+		return service.updateTask(task);
+	}
+	
+	@GetMapping("/tasks")
+	public List<Task> getallTasks(){
+		return service.getTasks();
+	}
+	
+	@GetMapping("/tasks/{id}")
+	public Task getTaskByID(@PathVariable Long Id) {
+		return service.getTaskById(Id);
+	}
+	
+	@DeleteMapping("/tasks/{id}")
+	public String deleteTask(@PathVariable Long id) {
+		return service.deleteTask(id);
+	}
+	
+	
+	
+
+}

@@ -1,0 +1,58 @@
+package com.rishirajan.Taskmanager.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.rishirajan.Taskmanager.Entity.Task;
+import com.rishirajan.Taskmanager.service.taskService;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+@RestController
+public class TaskController {
+	 private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
+	 
+	@Autowired
+	private taskService service;
+	
+	@PostMapping("/tasks")
+	public Task addTask(@RequestBody Task task) {
+		 logger.info("Incoming Task: {}", task);		
+		return service.saveTask(task);
+	}
+	
+	@PutMapping("/tasks")
+	public Task updateTask(@RequestBody Task task) {
+		return service.updateTask(task);
+	}
+	
+	@GetMapping("/tasks")
+	public List<Task> getallTasks(){
+		return service.getTasks();
+	}
+	
+	@GetMapping("/tasks/{id}")
+	public Task getTaskByID(@PathVariable Long id) {
+		return service.getTaskById(id);
+	}
+	
+	@DeleteMapping("/tasks/{id}")
+	public String deleteTask(@PathVariable Long id) {
+		return service.deleteTask(id);
+	}
+	
+	
+	
+
+}

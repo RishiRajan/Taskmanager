@@ -1,0 +1,33 @@
+package com.rishirajan.Taskmanager.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.rishirajan.Taskmanager.Entity.Comment;
+import com.rishirajan.Taskmanager.Entity.Task;
+import com.rishirajan.Taskmanager.repository.CommentRepository;
+import com.rishirajan.Taskmanager.repository.TaskRepository;
+
+@Service
+public class CommentService {
+	
+	@Autowired
+	private CommentRepository commentRepo;
+	
+	@Autowired
+	private TaskRepository TaskRepo;
+	
+	public List<Comment> getComments(Long id){
+		return commentRepo.findByTaskId(id);
+	}
+	
+	public Comment postComment(Comment comm  , Long taskId) 
+	{
+		Task task = TaskRepo.findById(taskId).orElseThrow(() -> new RuntimeException("Task not found") );
+		comm.setTask(task);
+		return commentRepo.save(comm);
+	}
+
+}
